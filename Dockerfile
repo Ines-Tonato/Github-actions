@@ -1,6 +1,4 @@
-
-
-FROM python:3.11
+FROM python:3.9.16-alpine3.16
 
 WORKDIR /flaskines
 
@@ -11,9 +9,12 @@ RUN pip3 install gunicorn
 COPY . .
 
 EXPOSE 80
-COPY entrypoint.sh
+
+WORKDIR /flaskines/app
+
+COPY entrypoint.sh .
 RUN chmod +x entrypoint.sh
+#ENTRYPOINT [ "python3", "/app/appFlask/src/app.py"]
 CMD ["./entrypoint.sh"]
-
-
-#ENTRYPOINT ["python3", "/flaskines/index.py"]
+# cmd arrancar gunicorn
+#CMD ["gunicorn"," --bind=0.0.0.0:80 app:app"]
